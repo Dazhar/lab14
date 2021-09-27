@@ -1,0 +1,44 @@
+import Foundation
+import RealmSwift
+
+class toDo: Object {
+    @objc dynamic var name = ""
+}
+
+class Udef{
+    var nam = ""
+    static let share = Udef()
+    private let realm =  try! Realm()
+    func test(){
+        let tDo = toDo()
+        tDo.name = nam
+        try! realm.write{
+            realm.add(tDo)
+        }
+       
+    }
+    func al(){
+        let allTodo = realm.objects(toDo.self)
+               for i in allTodo{
+                   print(i)
+               }
+    
+    }
+    
+    func delet(){
+           let allTodo = realm.objects(toDo.self)
+            try! realm.write{
+                realm.delete(allTodo[2])
+           }
+           }
+    private let kUserName = "default.kUserName"
+    private let kUserName2 = "default.kUserName2"
+    var userName: String?{
+        set{UserDefaults.standard.set(newValue, forKey: kUserName)}
+        get{return UserDefaults.standard.string(forKey: kUserName)}
+    }
+    var userName2: String?{
+        set{UserDefaults.standard.set(newValue, forKey: kUserName2)}
+        get{return UserDefaults.standard.string(forKey: kUserName2)}
+    }
+}
